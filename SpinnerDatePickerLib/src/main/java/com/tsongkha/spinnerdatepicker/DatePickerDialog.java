@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -15,12 +18,13 @@ import java.util.Calendar;
  * A fork of the Android Open Source Project DatePickerDialog class
  */
 public class DatePickerDialog extends AlertDialog implements OnClickListener,
-        OnDateChangedListener {
+                                                             OnDateChangedListener {
 
     private static final String YEAR = "year";
     private static final String MONTH = "month";
     private static final String DAY = "day";
     private static final String TITLE_SHOWN = "title_enabled";
+    private static final String CUSTOM_TITLE = "custom_title";
 
     private final DatePicker mDatePicker;
     private final OnDateSetListener mCallBack;
@@ -28,7 +32,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     private final DateFormat mTitleDateFormat;
 
     private boolean mIsDayShown = true;
-    private boolean mIsTitleShown = true;
+    private boolean mIsDefaultTitleShown = true;
+    @Nullable private CharSequence customTitle;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -56,23 +61,24 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         void onCancelled(DatePicker view);
     }
 
-    DatePickerDialog(Context context,
-                     int theme,
-                     int spinnerTheme,
-                     OnDateSetListener callBack,
-                     OnDateCancelListener onCancel,
-                     Calendar defaultDate,
-                     Calendar minDate,
-                     Calendar maxDate,
-                     boolean isDayShown,
-                     boolean isTitleShown) {
+    public DatePickerDialog(Context context,
+                            int theme,
+                            int spinnerTheme,
+                            OnDateSetListener callBack,
+                            OnDateCancelListener onCancel,
+                            Calendar defaultDate,
+                            Calendar minDate,
+                            Calendar maxDate,
+                            boolean isDayShown,
+                            boolean isDefaultTitleShown,
+                            @Nullable CharSequence customTitle) {
         super(context, theme);
 
         mCallBack = callBack;
         mOnCancel = onCancel;
         mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         mIsDayShown = isDayShown;
-        mIsTitleShown = isTitleShown;
+        mIsDefaultTitleShown = isDefaultTitleShown;
 
         updateTitle(defaultDate);
 
@@ -123,10 +129,12 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     }
 
     private void updateTitle(Calendar updatedDate) {
-        if (mIsTitleShown) {
+        if (mIsDefaultTitleShown) {
             final DateFormat dateFormat = mTitleDateFormat;
             setTitle(dateFormat.format(updatedDate.getTime()));
-        } else {
+        } else if (customTitle != null){
+            setTitle(customTitle);
+        } {
             setTitle(" ");
         }
     }
@@ -137,7 +145,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         state.putInt(YEAR, mDatePicker.getYear());
         state.putInt(MONTH, mDatePicker.getMonth());
         state.putInt(DAY, mDatePicker.getDayOfMonth());
-        state.putBoolean(TITLE_SHOWN, mIsTitleShown);
+        state.putBoolean(TITLE_SHOWN, mIsDefaultTitleShown);
+        state.putCharSequence(CUSTOM_TITLE, customTitle);
         return state;
     }
 
@@ -147,7 +156,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         int year = savedInstanceState.getInt(YEAR);
         int month = savedInstanceState.getInt(MONTH);
         int day = savedInstanceState.getInt(DAY);
-        mIsTitleShown = savedInstanceState.getBoolean(TITLE_SHOWN);
+        mIsDefaultTitleShown = savedInstanceState.getBoolean(TITLE_SHOWN);
+        customTitle = savedInstanceState.getCharSequence(CUSTOM_TITLE);
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);

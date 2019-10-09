@@ -87,7 +87,7 @@ public class DatePicker extends FrameLayout {
 
     private boolean mIsDayShown = true;
 
-    DatePicker(ViewGroup root, int numberPickerStyle) {
+    public DatePicker(ViewGroup root, int numberPickerStyle) {
         super(root.getContext());
         mContext = root.getContext();
 

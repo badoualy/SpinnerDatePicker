@@ -5,13 +5,16 @@ import android.content.Context;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import androidx.annotation.Nullable;
+
 public class SpinnerDatePickerDialogBuilder {
 
     private Context context;
     private DatePickerDialog.OnDateSetListener callBack;
     private DatePickerDialog.OnDateCancelListener onCancel;
     private boolean isDayShown = true;
-    private boolean isTitleShown = true;
+    private boolean isDefaultTitleShown = true;
+    @Nullable private CharSequence customTitle;
     private int theme = 0;                 //default theme
     private int spinnerTheme = 0;          //default theme
     private Calendar defaultDate = new GregorianCalendar(1980, 0, 1);
@@ -64,8 +67,13 @@ public class SpinnerDatePickerDialogBuilder {
         return this;
     }
 
-    public SpinnerDatePickerDialogBuilder showTitle(boolean showTitle) {
-        this.isTitleShown = showTitle;
+    public SpinnerDatePickerDialogBuilder showDefaultTitle(boolean showDefaultTitle) {
+        this.isDefaultTitleShown = showDefaultTitle;
+        return this;
+    }
+
+    public SpinnerDatePickerDialogBuilder customTitle(CharSequence customTitle) {
+        this.customTitle = customTitle;
         return this;
     }
 
