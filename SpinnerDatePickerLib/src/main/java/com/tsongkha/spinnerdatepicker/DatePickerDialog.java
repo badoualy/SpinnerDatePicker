@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-
 import java.text.DateFormat;
 import java.util.Calendar;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 /**
  * A fork of the Android Open Source Project DatePickerDialog class
@@ -33,7 +33,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 
     private boolean mIsDayShown = true;
     private boolean mIsDefaultTitleShown = true;
-    @Nullable private CharSequence mCustomTitle;
+    @Nullable
+    private CharSequence mCustomTitle;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -84,9 +85,9 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         updateTitle(defaultDate);
 
         setButton(BUTTON_POSITIVE, context.getText(android.R.string.ok),
-                this);
+                  this);
         setButton(BUTTON_NEGATIVE, context.getText(android.R.string.cancel),
-                this);
+                  this);
 
         LayoutInflater inflater =
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -95,7 +96,11 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mDatePicker = new DatePicker((ViewGroup) view, spinnerTheme);
         mDatePicker.setMinDate(minDate.getTimeInMillis());
         mDatePicker.setMaxDate(maxDate.getTimeInMillis());
-        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), isDayShown, this);
+        mDatePicker.init(defaultDate.get(Calendar.YEAR),
+                         defaultDate.get(Calendar.MONTH),
+                         defaultDate.get(Calendar.DAY_OF_MONTH),
+                         isDayShown,
+                         this);
 
     }
 
@@ -106,7 +111,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                 if (mCallBack != null) {
                     mDatePicker.clearFocus();
                     mCallBack.onDateSet(mDatePicker, mDatePicker.getYear(),
-                            mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
+                                        mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
                 }
                 break;
             }
@@ -133,9 +138,9 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         if (mIsDefaultTitleShown) {
             final DateFormat dateFormat = mTitleDateFormat;
             setTitle(dateFormat.format(updatedDate.getTime()));
-        } else if (mCustomTitle != null){
+        } else if (mCustomTitle != null) {
             setTitle(mCustomTitle);
-        } {
+        } else {
             setTitle(" ");
         }
     }
