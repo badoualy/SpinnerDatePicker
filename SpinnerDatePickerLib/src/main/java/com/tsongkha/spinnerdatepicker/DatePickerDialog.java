@@ -147,7 +147,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         state.putInt(MONTH, mDatePicker.getMonth());
         state.putInt(DAY, mDatePicker.getDayOfMonth());
         state.putBoolean(TITLE_SHOWN, mIsDefaultTitleShown);
-        state.putCharSequence(CUSTOM_TITLE, customTitle);
+        state.putCharSequence(CUSTOM_TITLE, mCustomTitle);
         return state;
     }
 
@@ -158,7 +158,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         int month = savedInstanceState.getInt(MONTH);
         int day = savedInstanceState.getInt(DAY);
         mIsDefaultTitleShown = savedInstanceState.getBoolean(TITLE_SHOWN);
-        customTitle = savedInstanceState.getCharSequence(CUSTOM_TITLE);
+        mCustomTitle = savedInstanceState.getCharSequence(CUSTOM_TITLE);
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
