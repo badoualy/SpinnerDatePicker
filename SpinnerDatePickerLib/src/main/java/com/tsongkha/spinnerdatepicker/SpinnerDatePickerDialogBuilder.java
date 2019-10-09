@@ -81,6 +81,6 @@ public class SpinnerDatePickerDialogBuilder {
         if (context == null) throw new IllegalArgumentException("Context must not be null");
         if (maxDate.getTime().getTime() <= minDate.getTime().getTime()) throw new IllegalArgumentException("Max date is not after Min date");
 
-        return new DatePickerDialog(context, theme, spinnerTheme, callBack, onCancel, defaultDate, minDate, maxDate, isDayShown, isTitleShown);
+        return new DatePickerDialog(context, theme, spinnerTheme, callBack, onCancel, defaultDate, minDate, maxDate, isDayShown, isDefaultTitleShown, customTitle);
     }
 }

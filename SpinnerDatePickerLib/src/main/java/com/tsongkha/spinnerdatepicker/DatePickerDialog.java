@@ -33,7 +33,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 
     private boolean mIsDayShown = true;
     private boolean mIsDefaultTitleShown = true;
-    @Nullable private CharSequence customTitle;
+    @Nullable private CharSequence mCustomTitle;
 
     /**
      * The callback used to indicate the user is done filling in the date.
@@ -79,6 +79,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         mIsDayShown = isDayShown;
         mIsDefaultTitleShown = isDefaultTitleShown;
+        mCustomTitle = customTitle;
 
         updateTitle(defaultDate);
 
@@ -132,8 +133,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         if (mIsDefaultTitleShown) {
             final DateFormat dateFormat = mTitleDateFormat;
             setTitle(dateFormat.format(updatedDate.getTime()));
-        } else if (customTitle != null){
-            setTitle(customTitle);
+        } else if (mCustomTitle != null){
+            setTitle(mCustomTitle);
         } {
             setTitle(" ");
         }
